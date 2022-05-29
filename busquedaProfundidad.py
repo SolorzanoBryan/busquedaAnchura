@@ -1,7 +1,7 @@
-# Breadth First Search - BFS
+# Depth First Search - DFS
 
 '''
-    Bryan Alfredo Solórzano Montero
+Bryan Alfredo Solórzano Montero
 '''
 
 from queue import Queue# Importación de libreria para usar la estructura FIFO (permite almacenar nodos)
@@ -85,35 +85,58 @@ class Grafo: # Clase para aplciar los grafos
             Por iteración se obtendra el nombre de cada clave
             Usando el nombre hacemos entrada al diccionario para obtener su valor y poder imprimirlo
 
-        busqueda_amplitud(self, inicio_nodo): La busqueda por achura tienen que tener un nod de inicio
+        busqueda_profundidad(self, inicio_nodo): La busqueda por profundidad va ser autoreferenciada
             Onjetivo
             -----------
-            Para ir juntando los nodos ya vivistados y evitar bucles
+            Aplicara recursividad para así encontrar el camino al nodo deseado. 
 
             Parametros
             ----------
-            self: number 
+            inicio: number 
                 Para decir de que nodo comenzaremos a buscar
 
-            inicio_nodo: number
-                El nodo al cual queremos buscar
+            target: number
+                Hace referencia al nodo a buscar, este sera el objetivo en todo el grafo
+                El nodo a buscar, ya encontrado finalziara el proceso 
+
+            camino: lista
+                Contendra todos los nodos del recorrido exacto para llegar al objetivo
+
+            visitado:  cola
+                Nos permitira crear un conjunto de elementos unicos 
 
             Avariables
             ----------
-            visitado:  cola
-                Nos permitira crerar un conjunto de elementos unicos
+            puerto: number
+                Preciso para determinar si ese nodo de inicio ya ha sido visitado
 
-            queue: lista
-                El modo mas estandar para trabajar con nodos de una manera segura
+            peso: number
+                Hace referencia a la ocmplejidad de paso, pero no se implementa en el codigo
 
             Descripción
             -----------
-            inicio_nodo sera añadido a la cola y en la lista de visitados
-                Asignación de ese parametro a los arreglos conjuntos de nuestras varaibles visitado y queue
+            El parametro inicio sera añadido dentro del camino y en la cola de visitado
+            La primera condición hace referencia al primer retorno
+
+            Proceso de interaciones para la busqueda
+                Existe un llamada a la lsita de objetos partiendo desde el nodo inicial
+                Se ahce una desestructuración de ese nodo, para traer el puerto y peso
+                Se detecta si ese puerto ha sido visitado
+                De ser caso se crea una varaible resultado
+                    Esta variable aplicara recursividad
+                    Si entre todas las interaciones no da ninguno entonces se devuleve ese resultado
+                Si no es encontrado se limpia el camino y se devuelve None (ninguno)
             
-            Mietras no este vacia la lista, siga haciendo la busqueda --> nos ira dando el nodo actual
-                Un ciclo for para ir mostrando el nodo actual, mientras la lista no este vacia
-                Aquí se procesa el tema del encolamiento y visita por los nodos
+            Retornos
+                ---------
+                En caso de que el inicio sea igual que el objetivo
+                    Retornara la varaible camino vacia
+
+                En caso de encontrarlo D
+                    evolvera la ruta de todos los nodos para llegar al objetivo
+                
+                En caso de encontrarlo 
+                    Devolvera None --> Esto es un tipo de dato que significa ninguno
     '''
 
     # Agregar un nodo
@@ -144,6 +167,19 @@ class Grafo: # Clase para aplciar los grafos
                 if siguiente_nodo not in visitado: # Para saber si ha sido visitado (ese not, es como hacer la negación para llegar a manejar datos booleanos)
                     queue.put(siguiente_nodo) # Inmediatamente es encolado
                     visitado.add(siguiente_nodo) # Si entra es que no ha sido visitado y ahora ya esta identificado
+    
+    def busqueda_profundidad(self, inicio, objetivo, camino = [], visitado = set()):
+        camino.append(inicio)
+        visitado.add(inicio)
+        if inicio == objetivo:
+            return camino
+        for (puerto, peso) in self.m_adj_list[inicio]:
+            if puerto not in visitado:
+                resultado = self.dfs(puerto, objetivo, camino, visitado) # Recursividad
+                if resultado is not None:
+                    return resultado
+        camino.pop()
+        return None  
 
 '''
     Conidcional __name__ == "__main___"
