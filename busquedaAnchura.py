@@ -13,7 +13,7 @@ from queue import Queue# Importación de libreria para usar la estructura FIFO (
 '''
 
 class Grafo: # Clase para aplciar los grafos
-    '''
+    ''' 
     Constructor
     Veamos los atributos necesarios para el objeto Grafo
 
@@ -122,6 +122,7 @@ class Grafo: # Clase para aplciar los grafos
         if not self.g_dirigido: 
             self.g_adjuntar_lista[nodo2].add((nodo1, peso)) 
     
+    # Imprimir lista de nodos
     def imprimir_adjuntar_lista(self): 
         for clave in self.g_adjuntar_lista.keys(): # 
             print(f'nodo{clave}: {self.g_adjuntar_lista[clave]}') 
@@ -144,12 +145,34 @@ class Grafo: # Clase para aplciar los grafos
                     queue.put(siguiente_nodo) # Inmediatamente es encolado
                     visitado.add(siguiente_nodo) # Si entra es que no ha sido visitado y ahora ya esta identificado
 
+'''
+    Conidcional __name__ == "__main___"
 
-if __name__ == "__main__": # Bloque de codigo considerado como el programa principal, aquí hace llamdo de modulo sde codigo para ejecutarlos
+    Descripción
+    -----------
+        Bloque de codigo considerado como el programa principal, aquí hace llamdo de modulo sde codigo para ejecutarlos
+
+    Objetivos
+    ---------
+        Intanciar un objeto: Grafo
+            A esa instancia de la clase Grafo se le debera agregar sus respectivos bordes
+        
+        Agregación de los nodos para representar al Grafo
+            La cantidad de bordes dependera del numero de nodos que estipulamos en su instancia
+
+        Imprimir los nodos para ver el grafo en forma de matrices
+            Como se dijo que se tratara de graficar tipo matrices, pues se implementa la función que nos imprimir la lista de todos esos nodos
+
+        Realización de una busqueda
+            Lo que se hara con el llamado de esta función sera buscar un nodo1 a partir de un nodo#
+            Debido a que es una función de busqueda necesitara devolver el resultado de la busqueda
+
+'''
+
+if __name__ == "__main__": 
+    
     g = Grafo(6, dirigido=False) # Instanicar un objeto
 
-    # A esa instancia de la clase Grafo se le debera agregar sus respectivos bordes
-    # La cantidad de bordes dependera del numero de nodos que estipulamos en su instancia
     g.agregar_borde(0, 1)
     g.agregar_borde(0, 2)
     g.agregar_borde(1, 2)
@@ -157,10 +180,11 @@ if __name__ == "__main__": # Bloque de codigo considerado como el programa princ
     g.agregar_borde(2, 3)
     g.agregar_borde(2, 4)
 
-    g.imprimir_adjuntar_lista() # Como se dijo que se tratara de graficar tipo matrices, pues se implementa la función que nos imprimir la lista de todos esos nodos
+    g.imprimir_adjuntar_lista() 
 
     print ("Lo siguiente es el primer recorrido de ancho (empezando por el vértice 0)")
 
-    # Lo que se hara con el llamado de esta función sera buscar un nodo1 a partir de un nodo#
-    g.busqueda_amplitud(0, 0) # Debido a que es una función de busqueda necesitara devolver el resultado de la busqueda
+    g.busqueda_amplitud(0, 0) 
     print()
+
+''' Finalización del Algoritmo'''
