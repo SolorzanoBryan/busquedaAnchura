@@ -4,7 +4,8 @@
     Bryan Alfredo Solórzano Montero
 '''
 
-from queue import Queue# Importación de libreria para usar la estructura FIFO (permite almacenar nodos)
+# Importación de libreria para usar la estructura FIFO (permite almacenar nodos)
+from queue import Queue
 
 '''
     Grafo:
@@ -12,7 +13,8 @@ from queue import Queue# Importación de libreria para usar la estructura FIFO (
         Con la ayuda de matrices de adyacencia.  
 '''
 
-class Grafo: # Clase para aplciar los grafos
+
+class Grafo:  # Clase para aplciar los grafos
     ''' 
     Constructor
     Veamos los atributos necesarios para el objeto Grafo
@@ -23,7 +25,7 @@ class Grafo: # Clase para aplciar los grafos
             Precisa el tamaño de los nodos
         g_dirigido: boolean
             El que dara dirección - # Es necesario saber si sera diriguido o no
-    
+
     Atributos
     ---------
         g_nodos:  number
@@ -36,11 +38,11 @@ class Grafo: # Clase para aplciar los grafos
 
     def __init__(self, numero_nodos, dirigido=True):
         # Atributos
-        self.g_numeros_nodos = numero_nodos 
-        self.g_nodos = range(self.g_numeros_nodos) 
-        self.g_dirigido = dirigido 
+        self.g_numeros_nodos = numero_nodos
+        self.g_nodos = range(self.g_numeros_nodos)
+        self.g_dirigido = dirigido
 
-        self.g_adjuntar_lista = {nodo: set() for nodo in self.g_nodos} 
+        self.g_adjuntar_lista = {nodo: set() for nodo in self.g_nodos}
 
     '''
     A pesar de que ningun metodo retorna algo en concreto, si modifica y trabajo con los atributos de la clase
@@ -118,32 +120,39 @@ class Grafo: # Clase para aplciar los grafos
 
     # Agregar un nodo
     def agregar_borde(self, nodo1, nodo2, peso=1):
-        self.g_adjuntar_lista[nodo1].add((nodo2, peso)) 
-        if not self.g_dirigido: 
-            self.g_adjuntar_lista[nodo2].add((nodo1, peso)) 
-    
+        self.g_adjuntar_lista[nodo1].add((nodo2, peso))
+        if not self.g_dirigido:
+            self.g_adjuntar_lista[nodo2].add((nodo1, peso))
+
     # Imprimir lista de nodos
-    def imprimir_adjuntar_lista(self): 
-        for clave in self.g_adjuntar_lista.keys(): # 
-            print(f'nodo{clave}: {self.g_adjuntar_lista[clave]}') 
+    def imprimir_adjuntar_lista(self):
+        for clave in self.g_adjuntar_lista.keys():
+            print(f'nodo{clave}: {self.g_adjuntar_lista[clave]}')
 
     # Busqueda por anchura
-    def busqueda_amplitud(self, inicio_nodo): 
+    def busqueda_amplitud(self, inicio_nodo):
         visitado = set()
-        queue = Queue() 
+        queue = Queue()
 
         # inicio_nodo sera añadido a la cola y en la lista de visitados
-        queue.put(inicio_nodo) # A la cola
-        visitado.add(inicio_nodo) # A la lista
+        queue.put(inicio_nodo)  # A la cola
+        visitado.add(inicio_nodo)  # A la lista
 
         # Mietras no este vacia la lista, siga haciendo la busqueda --> nos ira dando el nodo actual
         while not queue.empty():
-            actual_nodo = queue.get() # Poner en cola el nodo actual
-            print(actual_nodo, end = " ") # Imprimir el nodo de cola
-            for (siguiente_nodo, peso) in self.g_adjuntar_lista[actual_nodo]: # Obtener los vertices de eso nodo
-                if siguiente_nodo not in visitado: # Para saber si ha sido visitado (ese not, es como hacer la negación para llegar a manejar datos booleanos)
-                    queue.put(siguiente_nodo) # Inmediatamente es encolado
-                    visitado.add(siguiente_nodo) # Si entra es que no ha sido visitado y ahora ya esta identificado
+            actual_nodo = queue.get()  # Poner en cola el nodo actual
+            print(actual_nodo, end=" ")  # Imprimir el nodo de cola
+            # print(visitado)
+            # Obtener los vertices de eso nodo
+            for (siguiente_nodo, peso) in self.g_adjuntar_lista[actual_nodo]:
+                # Para saber si ha sido visitado (ese not, es como hacer la negación para llegar a manejar datos booleanos)
+                if siguiente_nodo not in visitado:
+                    queue.put(siguiente_nodo)  # Inmediatamente es encolado
+                    # Si entra es que no ha sido visitado y ahora ya esta identificado
+                    visitado.add(siguiente_nodo)
+
+                # print(actual_nodo, siguiente_nodo)
+
 
 '''
     Conidcional __name__ == "__main___"
@@ -170,26 +179,48 @@ class Grafo: # Clase para aplciar los grafos
 '''
 
 
+if __name__ == "__main__":
 
-if __name__ == "__main__": 
-    
-    g = Grafo(6, dirigido=False) # Instanicar un objeto
+    grafo1 = Grafo(5, dirigido=True)  # Instanicar un objeto
+    grafo2 = Grafo(4, dirigido=True)  # Instanicar un objeto
+    grafo3 = Grafo(5, dirigido=False)  # Instanicar un objeto
 
     # Agregar todos los bordes del gráfico a la instancia de Grafo
-    g.agregar_borde(0, 1)
-    g.agregar_borde(0, 2)
-    g.agregar_borde(1, 2)
-    g.agregar_borde(1, 4)
-    g.agregar_borde(2, 3)
-    g.agregar_borde(2, 4)
+
+    # GRAFO 1
+    grafo1.agregar_borde(0, 1)
+    grafo1.agregar_borde(0, 2)
+    grafo1.agregar_borde(1, 2)
+    grafo1.agregar_borde(1, 4)
+    grafo1.agregar_borde(2, 3)
+
+    # EJEMPLO 2
+    grafo2.agregar_borde(0, 1)
+    grafo2.agregar_borde(0, 3)
+    grafo2.agregar_borde(1, 2)
+    grafo2.agregar_borde(1, 3)
+
+    # GRAFO 3
+    grafo3.agregar_borde(0, 1)
+    grafo3.agregar_borde(1, 2)
+    grafo3.agregar_borde(3, 4)
 
     # Imprisión del grafo
-    g.imprimir_adjuntar_lista() 
+    print('GRAFO N°1')
+    grafo1.imprimir_adjuntar_lista()
+    print('GRAFO N°2')
+    grafo2.imprimir_adjuntar_lista()
+    print('GRAFO N°3')
+    grafo3.imprimir_adjuntar_lista()
 
-    print ("Lo siguiente es el primer recorrido de ancho (empezando por el vértice 0)")
+    print("Lo siguiente es el primer recorrido de ancho (empezando por el vértice 0)")
 
     # Busqueda por medio de un nodo
-    g.busqueda_amplitud(0, 0) 
-    print()
+    grafo1.busqueda_amplitud(0)
+    print('|')
+    grafo2.busqueda_amplitud(0)
+    print('|')
+    grafo3.busqueda_amplitud(0)
+    print('|')
 
 ''' Finalización del Algoritmo'''
